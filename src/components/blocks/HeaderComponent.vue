@@ -5,8 +5,8 @@
             <a href="#"><img src="/img/logo-netflix.png" alt=""></a>
         </div>
         <div class="searchbar">
-            <form>
-                <input type="text" placeholder="Search movie">
+            <form @submit.prevent="searching">
+                <input type="text" placeholder="Search movie" v-model="searchText" required>
                 <button type="submit">Search</button>
             </form>
         </div>
@@ -15,8 +15,32 @@
 </template>
 
 <script>
+import axios from 'axios'
+import data from '../../shared/data'
+
 export default {
-    name: 'HeaderComponent'
+    name: 'HeaderComponent',
+    data() {
+        return {
+            data,
+            searchText: ''
+        }
+    },
+    methods: {
+        searching() {
+            axios.get('https://api.themoviedb.org/3/search/movie', {
+                params: {
+                    api_key: 'bd410fbd725b090b8198430bb389db24',
+                    query: this.searchText,
+                    language: 'it, IT'
+                }
+            }).then((response) => {
+                data.movies = response.data.results
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+    }
 }
 </script>
 
