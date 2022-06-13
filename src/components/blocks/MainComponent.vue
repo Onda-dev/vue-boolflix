@@ -1,32 +1,34 @@
 <template>
   <main>
-      <h2>Movies</h2>
       <div class="container">
-        <ul>
-            <li v-for="movie in data.movies" :key="movie.id">
-                <h3 class="title">{{movie.title}}</h3>
-                <h4 class="original-title">{{movie.original_title}}</h4>
-                <div class="vote">{{movie.vote_average}}</div>
-                <div class="language">{{movie.original_lenguage}}</div>
-            </li>
-        </ul>
-        <h2>Series</h2>
-        <ul>
-            <li v-for="series in data.tv" :key="series.id">
-                <h3 class="title">{{tv.name}}</h3>
-                <h4 class="original-title">{{tv.original_name}}</h4>
-                <div class="vote">{{tv.vote_average}}</div>
-                <div class="language">{{tv.original_lenguage}}</div>
-            </li>
-        </ul>
+        <div class="movies-box">
+            <h2>Movies</h2>
+            <ul>
+                <li v-for="movie in data.movies" :key="movie.id">
+                    <CardProduct :info="movie"/>
+                </li>
+            </ul>
+        </div>
+        <div class="series-box">
+            <h2>Series</h2>
+            <ul>
+                <li v-for="series in data.tv" :key="series.id">
+                    <CardProduct :info="series"/>
+                </li>
+            </ul>
+            </div>
       </div>
   </main>
 </template>
 
 <script>
 import data from '../../shared/data'
+import CardProduct from '../commons/CardProduct.vue'
 
 export default {
+    components: {
+        CardProduct
+    },
     name: 'MainComponent',
     data(){
         return {
